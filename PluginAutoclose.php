@@ -15,67 +15,67 @@ class PluginAutoclose extends ServicePlugin
     {
 
         $variables = array(
-            /*T*/'Plugin Name'/*/T*/   => array(
+            lang('Plugin Name')   => array(
                 'type'          => 'hidden',
-                'description'   => /*T*/''/*/T*/,
-                'value'         => /*T*/'Ticket Auto Close'/*/T*/,
+                'description'   => '',
+                'value'         => lang('Ticket Auto Close'),
             ),
 
-	    /*T*/'Enabled'/*/T*/       => array(
+	    lang('Enabled')       => array(
                 'type'          => "yesno",
-                'description'   => /*T*/'When enabled, tickets remaining unresponded to by customers for x amount of days will automatically be closed.'/*/T*/,
+                'description'   => lang('When enabled, tickets remaining unresponded to by customers for x amount of days will automatically be closed.'),
                 'value'         => '0',
             ),
 
-            /*T*/'Days to trigger autoclose'/*/T*/       => array(
+            lang('Days to trigger autoclose')       => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number of days to wait before autoclosing a ticket that is in the waiting on customer status.'/*/T*/,
+                'description'   => lang('Enter number of days to wait before autoclosing a ticket that is in the waiting on customer status.'),
                 'value'         => '3',
             ),
-            /*T*/'Ticket Message'/*/T*/       => array(
+            lang('Ticket Message')       => array(
                 'type'          => 'textarea',
-                'description'   => /*T*/'Enter the message you would like entered into the ticket when it is closed.<br>Template Tags: [CLIENTNAME], [TICKETNUMBER], [TICKETSUBJECT], [TICKETFIRSTLOG], [COMPANYNAME]'/*/T*/,
+                'description'   => lang('Enter the message you would like entered into the ticket when it is closed.<br>Template Tags: [CLIENTNAME], [TICKETNUMBER], [TICKETSUBJECT], [TICKETFIRSTLOG], [COMPANYNAME]'),
                 'value'         => "ATTN: [CLIENTNAME],\r\n\r\nYour Support Ticket #[TICKETNUMBER] with subject \"[TICKETSUBJECT]\" has been closed due to inactivity.\r\nIf this issue has not been resolved please reopen this ticket.\r\n\r\nThank you,\r\n[COMPANYNAME]",
             ),
-            /*T*/'Pre-Notify Customer'/*/T*/       => array(
+            lang('Pre-Notify Customer')       => array(
                 'type'          => 'yesno',
-                'description'   => /*T*/'When enabled the customer will be notified before close a ticket. Use the AutoClose Ticket Service Template'/*/T*/,
+                'description'   => lang('When enabled the customer will be notified before close a ticket. Use the AutoClose Ticket Service Template'),
                 'value'         => '1',
             ),
-            /*T*/'Days to trigger Pre-Notify autoclose'/*/T*/       => array(
+            lang('Days to trigger Pre-Notify autoclose')       => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number of days to notify before autoclosing a ticket that is in the waiting on customer status.'/*/T*/,
+                'description'   => lang('Enter number of days to notify before autoclosing a ticket that is in the waiting on customer status.'),
                 'value'         => '1',
             ),
-            /*T*/'Notify Customer'/*/T*/       => array(
+            lang('Notify Customer')       => array(
                 'type'          => 'yesno',
-                'description'   => /*T*/'When enabled the customer will be notified when a ticket is closed.'/*/T*/,
+                'description'   => lang('When enabled the customer will be notified when a ticket is closed.'),
                 'value'         => '1',
             ),
-            /*T*/'Run schedule - Minute'/*/T*/  => array(
+            lang('Run schedule - Minute')  => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number, range, list or steps'/*/T*/,
+                'description'   => lang('Enter number, range, list or steps'),
                 'value'         => '30',
                 'helpid'        => '8',
             ),
-            /*T*/'Run schedule - Hour'/*/T*/  => array(
+            lang('Run schedule - Hour')  => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number, range, list or steps'/*/T*/,
+                'description'   => lang('Enter number, range, list or steps'),
                 'value'         => '*',
             ),
-            /*T*/'Run schedule - Day'/*/T*/  => array(
+            lang('Run schedule - Day')  => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number, range, list or steps'/*/T*/,
+                'description'   => lang('Enter number, range, list or steps'),
                 'value'         => '*',
             ),
-            /*T*/'Run schedule - Month'/*/T*/  => array(
+            lang('Run schedule - Month')  => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number, range, list or steps'/*/T*/,
+                'description'   => lang('Enter number, range, list or steps'),
                 'value'         => '*',
             ),
-            /*T*/'Run schedule - Day of the week'/*/T*/  => array(
+            lang('Run schedule - Day of the week')  => array(
                 'type'          => 'text',
-                'description'   => /*T*/'Enter number in range 0-6 (0 is Sunday) or a 3 letter shortcut (e.g. sun)'/*/T*/,
+                'description'   => lang('Enter number in range 0-6 (0 is Sunday) or a 3 letter shortcut (e.g. sun)'),
                 'value'         => '*',
             ),
         );
