@@ -2,6 +2,7 @@
 require_once 'modules/admin/models/ServicePlugin.php';
 require_once'library/CE/NE_MailGateway.php';
 require_once 'modules/support/models/Ticket.php';
+require_once 'modules/admin/models/StatusAliasGateway.php';
 
 /**
 * @package Plugins
@@ -98,7 +99,8 @@ class PluginAutoclose extends ServicePlugin
             $autocloseCondition = '';
         }
 
-        $sql = "SELECT * FROM `troubleticket` WHERE `status`='3' $autocloseCondition AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
+        $statusWaitingCustomer = StatusAliasGateway::getInstance($this->user)->getTicketStatusIdsFor(TICKET_STATUS_WAITINGONCUSTOMER);
+        $sql = "SELECT * FROM `troubleticket` WHERE `status` IN (".implode(', ', $statusWaitingCustomer).") $autocloseCondition AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
         $result = $this->db->query($sql, $this->settings->get('plugin_autoclose_Days to trigger autoclose'));
         while ($row = $result->fetch()) {
             $ticket = new Ticket($row['id']);
@@ -137,7 +139,7 @@ class PluginAutoclose extends ServicePlugin
 
         $numNotified=0;
         if($this->settings->get('plugin_autoclose_Pre-Notify Customer')){
-            $sql = "SELECT * FROM `troubleticket` WHERE `status`='3' AND autoclose='0' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
+            $sql = "SELECT * FROM `troubleticket` WHERE `status` IN (".implode(', ', $statusWaitingCustomer).") AND autoclose='0' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
             $result = $this->db->query($sql, $this->settings->get('plugin_autoclose_Days to trigger Pre-Notify autoclose'));
             while ($row = $result->fetch()) {
                 $ticket = new Ticket($row['id']);
@@ -156,7 +158,8 @@ class PluginAutoclose extends ServicePlugin
 
 	function dashboard()
 	{
-		$query = "SELECT COUNT(*) AS tickets FROM `troubleticket` WHERE `status`='3' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
+        $statusWaitingCustomer = StatusAliasGateway::getInstance($this->user)->getTicketStatusIdsFor(TICKET_STATUS_WAITINGONCUSTOMER);
+		$query = "SELECT COUNT(*) AS tickets FROM `troubleticket` WHERE `status` IN (".implode(', ', $statusWaitingCustomer).") AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
         $result = $this->db->query($query, $this->settings->get('plugin_autoclose_Days to trigger autoclose'));
         $row = $result->fetch();
         if (!$row) {
@@ -169,7 +172,8 @@ class PluginAutoclose extends ServicePlugin
     function pendingItems()
     {
         // Notify
-        $query = "SELECT * FROM `troubleticket` WHERE `status`='3' AND autoclose='0' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
+        $statusWaitingCustomer = StatusAliasGateway::getInstance($this->user)->getTicketStatusIdsFor(TICKET_STATUS_WAITINGONCUSTOMER);
+        $query = "SELECT * FROM `troubleticket` WHERE `status` IN (".implode(', ', $statusWaitingCustomer).") AND autoclose='0' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
         $result = $this->db->query($query, $this->settings->get('plugin_autoclose_Days to trigger Pre-Notify autoclose'));
 
         $tickets = array();
@@ -185,7 +189,7 @@ class PluginAutoclose extends ServicePlugin
         }
 
         // Closed
-        $query = "SELECT * FROM `troubleticket` WHERE `status`='3' AND autoclose='1' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
+        $query = "SELECT * FROM `troubleticket` WHERE `status` IN (".implode(', ', $statusWaitingCustomer).") AND autoclose='1' AND `lastlog_datetime` <= DATE_SUB( NOW() , INTERVAL ? DAY )";
         $result = $this->db->query($query, $this->settings->get('plugin_autoclose_Days to trigger autoclose'));
         while ($row = $result->fetch()) {
             $user = new User($row['userid']);
