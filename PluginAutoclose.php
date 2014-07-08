@@ -40,7 +40,7 @@ class PluginAutoclose extends ServicePlugin
             ),
             lang('Pre-Notify Customer')       => array(
                 'type'          => 'yesno',
-                'description'   => lang('When enabled the customer will be notified before close a ticket. Use the AutoClose Ticket Service Template'),
+                'description'   => lang('When enabled the customer will be notified before the ticket is closed. Use the AutoClose Ticket Service Template'),
                 'value'         => '1',
             ),
             lang('Days to trigger Pre-Notify autoclose')       => array(
