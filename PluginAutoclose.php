@@ -119,7 +119,7 @@ class PluginAutoclose extends ServicePlugin
             $message = str_replace(array("[COMPANYNAME]","%5BCOMPANYNAME%5D"), $this->settings->get("Company Name"), $message);
 
             $logSql = "INSERT INTO troubleticket_log (troubleticketid, message, userid, mydatetime, logaction, logtype, newstate) VALUES(?, ?, ?, NOW(), '2', ?, '')";
-            $this->db->query($logSql, $row['id'], $message, $ticket->getAssignedToId(), TYPE_MSG);
+            $this->db->query($logSql, $row['id'], $message, $ticket->getAssignedToId(), TicketLog::TYPE_STATUS);
             if ($this->settings->get('plugin_autoclose_Notify Customer')) {
                 $mailGateway->mailMessage(  $message,
                                             $this->settings->get('Support E-mail'),
