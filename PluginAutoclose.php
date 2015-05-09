@@ -112,7 +112,7 @@ class PluginAutoclose extends ServicePlugin
             $user = new User($userid);
 
             $message = $this->settings->get('plugin_autoclose_Ticket Message');
-            $message = str_replace("[CLIENTNAME]", $user->getFullName(), $message);
+            $message = str_replace("[CLIENTNAME]", $user->getFullName(true), $message);
             $message = str_replace("[TICKETNUMBER]", $ticket->getIdLabel(), $message);
             $message = str_replace("[TICKETSUBJECT]", $ticket->getSubject(), $message);
             $message = str_replace("[TICKETFIRSTLOG]", $ticket->getFirstLog(), $message);
